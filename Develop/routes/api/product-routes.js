@@ -6,9 +6,14 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', async(req, res) => {
   try {
-    
+    const products = await Product.findAll({
+      include: [{
+        model: Category
+      }]
+    })
+    res.status(200).json(products)
   } catch (error) {
-    
+    res.status(400).json(error);
   }
   // find all products
   // be sure to include its associated Category and Tag data
@@ -17,9 +22,15 @@ router.get('/', async(req, res) => {
 // get one product
 router.get('/:id', async(req, res) => {
   try {
-    
+    const products = await Product.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(200).json(products)
   } catch (error) {
-    
+    res.status(400).json(error)
+ 
   }
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
@@ -27,14 +38,6 @@ router.get('/:id', async(req, res) => {
 
 // create new product
 router.post('/', async(req, res) => {
-  try {
-    const products = await Product.create(
-      req.body
-    )
-    res.status(200).end()
-  } catch (error) {
-    res.status(400).json(error)  
-  }
   /* req.body should look like this...
     {
       product_name: "Basketball",

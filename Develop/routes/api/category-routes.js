@@ -51,7 +51,7 @@ router.put('/:id', async(req, res) => {
       }
     }
     )
-    res.status(200).end()
+    res.status(200).json(categories)
   } catch (error) {
     res.status(400).json(error)
   }
